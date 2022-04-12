@@ -17,8 +17,8 @@ WHERE tournament.id_tournament = 1
 3: Traer todos los partidos con los nombres de los equipos que se están enfrentando
 SELECT soccer_game.game_location_address AS lugarPartido, 
 soccer_game.id_game AS partidoNumero, 
-(SELECT team.team_name WHERE soccer_game.game_team_home = subscription.id_subscription) equipoLocal,
-(SELECT team.team_name WHERE soccer_game.game_team_home = subscription.id_subscription) equipoVisitante
+(SELECT team.team_name WHERE soccer_game.id_game = soccer_game.game_team_home) equipoLocal,
+(SELECT team.team_name WHERE soccer_game.id_game = soccer_game.game_team_visit) equipoVisitante
 FROM subscription
 INNER JOIN soccer_game ON subscription.id_subscription = soccer_game.game_team_home 
 INNER JOIN team ON subscription.id_subscription = team.id_team
