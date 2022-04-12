@@ -1,0 +1,24 @@
+1: Traer todos los jugadores de un equipo
+
+SELECT soccer_player.soccer_name, soccer_player.soccer_nickname, team.team_name
+FROM subscription_team
+INNER JOIN soccer_player ON subscription_team.soccer_player = soccer_player.id_soccer 
+INNER JOIN team ON subscription_team.team = team.id_team
+WHERE team.team_name = "Chalatenango"
+
+2: Traer a todos los equipos que pertenecen a un torneo
+
+SELECT team.team_name, tournament.tournament_name
+FROM subscription
+INNER JOIN tournament ON subscription.tournament_id_tournament = tournament.id_tournament
+INNER JOIN team ON subscription.team_id_team = team.id_team
+WHERE tournament.id_tournament = 1
+
+3: Traer todos los partidos con los nombres de los equipos que se están enfrentando
+SELECT soccer_game.game_location_address AS lugarPartido, 
+soccer_game.id_game AS partidoNumero, 
+(SELECT team.team_name WHERE soccer_game.game_team_home = subscription.id_subscription) equipoLocal,
+(SELECT team.team_name WHERE soccer_game.game_team_home = subscription.id_subscription) equipoVisitante
+FROM subscription
+INNER JOIN soccer_game ON subscription.id_subscription = soccer_game.game_team_home 
+INNER JOIN team ON subscription.id_subscription = team.id_team
